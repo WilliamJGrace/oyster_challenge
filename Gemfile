@@ -4,9 +4,10 @@ source "https://rubygems.org"
 
 ruby '2.6.3'
 
-group :test do
+group :test, :development do
   gem 'rspec'
   gem 'rubocop', '0.72.0'
+  
 
 end
 
