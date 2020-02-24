@@ -15,8 +15,8 @@ describe OysterCard do
     expect{ subject.top_up 1}.to change{ subject.balance }.by 1
   end
 
-  it 'will fail if you try and top up past the maximum balance allowed, £90' do
-    expect{subject.top_up(91)}.to raise_error 'You cant top up more than £90 balance'
+  it "will fail if you try and top up past the maximum balance allowed, #{OysterCard::MAXIMUM_BALANCE}" do
+    expect{subject.top_up(91)}.to raise_error "You cant top up more than #{OysterCard::MAXIMUM_BALANCE} balance"
   end
 
   it { is_expected.to respond_to(:deduct).with(1).argument }
