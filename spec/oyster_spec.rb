@@ -24,4 +24,27 @@ describe OysterCard do
   it 'will deduct the amount from the oyster card' do
   expect{subject.deduct(2) }.to change{subject.balance }.by -2
   end
+
+  # This test is to check the response of touchin method.
+
+  it { is_expected.to respond_to(:touch_in) } 
+  
+  it 'check if the oyster card have been touch in' do 
+    expect(subject.touch_in).to eq true
+  end
+
+  # This tests are for test in_journey? method.
+
+  it { is_expected.to respond_to(:in_journey?) }
+
+  it 'expect the travel to be when the touch in has been done.' do
+    allow(subject).to receive(:touch_in) { true }
+    expect(subject.in_journey?).to eq true
+
+end 
+
+  # This tests are for testing touch_out method.
+
+  it { is_expected.to respond_to(:touch_out)}
+
 end

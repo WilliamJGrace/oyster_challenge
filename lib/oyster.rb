@@ -2,11 +2,9 @@ class OysterCard
 	attr_reader :balance 
 	DEFAULT_BALANCE = 0
 	MAXIMUM_BALANCE = 90
-	def initialize(balance = DEFAULT_BALANCE, touch_in = false, touch_out = false, in_journey = false)
+	def initialize(balance = DEFAULT_BALANCE)
 		@balance = balance
-		@touch_in = touch_in
-		@touch_out = touch_out
-		@in_journey = in_journey
+	
 	end
 
 	def top_up(num)
@@ -17,20 +15,19 @@ class OysterCard
 	def deduct(num)
 		@balance -= num
 	end
-
+	
 	def touch_in
-		@touch_in = true
-		@touch_out = true
-		@in_journey = true
+	  true
+	end 
+
+	def in_journey?
+	  if touch_in 
+	    true
+	  end
+	  
 	end
 
 	def touch_out
-		@touch_in = false
-		@touch_out = true
-		@in_journey = false
 	end
 
-	def in_journey?
-		@in_journey
-	end
 end
