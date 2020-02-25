@@ -22,20 +22,30 @@ describe OysterCard do
 
 
   # This test is to check the response of touchin method.
+  context "#touch_in" do
+    it { is_expected.to respond_to(:touch_in) }
 
-  it { is_expected.to respond_to(:touch_in) }
+    it 'start the journey' do
+      card = OysterCard.new(OysterCard::MINIMUM_AMOUNT)
+      card.touch_in
+      expect(card.in_journey).to eq(true)
+    end
 
-  it 'start the journey' do
-    card = OysterCard.new(OysterCard::MINIMUM_AMOUNT)
-    card.touch_in
-    expect(card.in_journey).to eq(true)
+    it "if mimimum amount is less than £1 you cannot travel" do
+      card = OysterCard.new
+      expect{ card.touch_in }.to raise_error "You cannot travel as you have less than £#{OysterCard::MINIMUM_AMOUNT}"
+
+    end
+
+    it 'remembers where i touch in' do
+      card = OysterCard.new(1)
+      # allow(card).to receive(:touch_in) { true }
+      card.touch_in
+      expect(card.entry_station).to eq "barbican"
+    end
+
   end
 
-  it "if mimimum amount is less than £1 you cannot travel" do
-    card = OysterCard.new
-    expect{ card.touch_in }.to raise_error "You cannot travel as you have less than £#{OysterCard::MINIMUM_AMOUNT}"
-
-  end
 
   it 'remembers where i touch in' do
     card = OysterCard.new(1)
