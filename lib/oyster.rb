@@ -6,7 +6,7 @@ class OysterCard
 	def initialize(balance = DEFAULT_BALANCE)
 		@balance = balance
 		@in_journey = false
-		@entry_station = nil
+		@entry_station
 
 	end
 
@@ -15,28 +15,22 @@ class OysterCard
 		@balance += num
 	end
 
-	def deduct(num)
-		@balance -= num
-	end
 
-	def touch_in
-
+	def touch_in(station)
 		fail "You cannot travel as you have less than £#{MINIMUM_AMOUNT}" if @balance < MINIMUM_AMOUNT
-		@entry_station = "barbican"
+		@entry_station = station
 		@in_journey = true
-
 	end
 
 
 	def touch_out
 		deduct
 		@in_journey = false
-
 	end
 
-	private 
+	private
 
 	def deduct
-		@balance -= 1
+		@balance -= MINIMUM_AMOUNT
 	end
 end
