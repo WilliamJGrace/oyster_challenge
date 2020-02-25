@@ -20,10 +20,9 @@ class OysterCard
 	end
 
 	def touch_in
-		@entry_station = "barbican"
 
 		fail "You cannot travel as you have less than £#{MINIMUM_AMOUNT}" if @balance < MINIMUM_AMOUNT
-		# @entry_station = "barbican"
+		@entry_station = "barbican"
 		@in_journey = true
 
 	end
