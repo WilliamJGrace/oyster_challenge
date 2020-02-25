@@ -29,22 +29,31 @@ describe OysterCard do
 
   it { is_expected.to respond_to(:touch_in) } 
   
-  it 'check if the oyster card have been touch in' do 
-    expect(subject.touch_in).to eq true
+  it 'start the journey' do
+    card = OysterCard.new
+    card.touch_in
+    expect(card.in_journey).to eq(true)
   end
+  
 
   # This tests are for test in_journey? method.
 
-  it { is_expected.to respond_to(:in_journey?) }
+  it { is_expected.to respond_to(:in_journey) }
 
-  it 'expect the travel to be when the touch in has been done.' do
-    allow(subject).to receive(:touch_in) { true }
-    expect(subject.in_journey?).to eq true
 
-end 
+
+  
+
 
   # This tests are for testing touch_out method.
 
   it { is_expected.to respond_to(:touch_out)}
+
+  it 'Finish' do
+    card = OysterCard.new
+    card.touch_in
+    card.touch_out
+    expect(card.in_journey).to eq(false)
+  end
 
 end
