@@ -26,9 +26,14 @@ class OysterCard
 
 
 	def touch_out
-
+		deduct
 		@in_journey = false
 
 	end
 
+	private 
+
+	def deduct
+		@balance -= 1
+	end
 end

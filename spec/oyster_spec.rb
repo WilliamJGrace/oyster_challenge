@@ -19,11 +19,7 @@ describe OysterCard do
     expect{subject.top_up(91)}.to raise_error "You cant top up more than #{OysterCard::MAXIMUM_BALANCE} balance"
   end
 
-  it { is_expected.to respond_to(:deduct).with(1).argument }
 
-  it 'will deduct the amount from the oyster card' do
-  expect{subject.deduct(2) }.to change{subject.balance }.by -2
-  end
 
   # This test is to check the response of touchin method.
 
@@ -61,5 +57,11 @@ describe OysterCard do
     card.touch_out
     expect(card.in_journey).to eq(false)
   end
+
+  it 'will deduct the amount from the oyster card' do
+
+    card = OysterCard.new
+    expect{ card.touch_out }.to change{card.balance }.by -1
+    end
 
 end
