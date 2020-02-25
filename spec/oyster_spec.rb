@@ -37,6 +37,13 @@ describe OysterCard do
 
   end
 
+  it 'remembers where i touch in' do
+    card = OysterCard.new(1)
+    # allow(card).to receive(:touch_in) { true }
+    card.touch_in
+    expect(card.entry_station).to eq "barbican"
+end
+
 
   # This tests are for test in_journey? method.
 
