@@ -31,7 +31,7 @@ describe OysterCard do
 
     it 'start the journey' do
       card_min_bal.touch_in(station)
-      expect(card_min_bal.in_journey).to eq(true)
+      expect(card_min_bal).to be_in_journey
     end
 
     it "if mimimum amount is less than £1 you cannot travel" do
@@ -40,11 +40,11 @@ describe OysterCard do
 
 
   end
-
-  # This tests are for test in_journey? instance variable.
-  describe "#in_journey" do
-    it { is_expected.to respond_to(:in_journey) }
-  end
+  #
+  # # This tests are for test in_journey? instance variable.
+  # describe "#in_journey" do
+  #   it { is_expected.to respond_to(:in_journey) }
+  # end
 
   # This tests are for testing touch_out method.
 
@@ -54,7 +54,7 @@ describe OysterCard do
     it 'will change in_journey to false when user touches out' do
       card_min_bal.touch_in(station)
       card_min_bal.touch_out
-      expect(card_min_bal.in_journey).to eq(false)
+      expect(card_min_bal).not_to be_in_journey
     end
 
     it 'will deduct the amount from the oyster card' do
@@ -65,6 +65,11 @@ describe OysterCard do
   it 'stores the entry station' do
     card_min_bal.touch_in(station)
     expect(card_min_bal.entry_station).to eq station
+  end
+  it 'returns station value to nil' do
+    card_min_bal.touch_in(station)
+    card_min_bal.touch_out
+    expect(card_min_bal.entry_station).to eq nil
   end
 
 end
