@@ -14,7 +14,7 @@ describe OysterCard do
       expect(subject.balance).to eq OysterCard::DEFAULT_BALANCE
   end
 
-  context "#top_up" do
+  describe "#top_up" do
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
     it 'can top up the balance' do
@@ -26,7 +26,7 @@ describe OysterCard do
     end
   end
 
-  context "#touch_in" do
+  describe "#touch_in" do
     # it { is_expected.to respond_to{:touch_in}
 
     it 'start the journey' do
@@ -42,12 +42,13 @@ describe OysterCard do
   end
 
   # This tests are for test in_journey? instance variable.
-  context "#in_journey" do
+  describe "#in_journey" do
     it { is_expected.to respond_to(:in_journey) }
   end
 
   # This tests are for testing touch_out method.
-  context "#touch_out" do
+
+  describe "#touch_out" do
     it { is_expected.to respond_to(:touch_out)}
 
     it 'will change in_journey to false when user touches out' do
