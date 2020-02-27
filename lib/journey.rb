@@ -1,14 +1,14 @@
-require 'oyster.rb'
 
 class Journey
 
   PENALTY_FARE = 6
 
-  attr_accessor :entry_station, :complete
+  attr_accessor :entry_station, :exit_station, :complete
 
-  def initialize(entry_info = {entry_station: "barbican"})
+  def initialize(entry_info)
     @complete = complete
     @entry_station = entry_info[:entry_station]
+    @exit_station = entry_info[:exit_station]
   end
 
   def complete?
