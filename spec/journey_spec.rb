@@ -1,38 +1,34 @@
 require 'journey'
 
 describe Journey do
-  #station double
-  let(:entry_station){ double :entry_station }
-  let(:exit_station){ double :exit_station }
-  #journey double
-  let(:journey){ {entry_station: entry_station, exit_station: exit_station} }
+  let(:station) { double :station, zone: 1}
 
-  it 'start the journey' do
-    card_min_bal.touch_in(entry_station)
-    expect(card_min_bal).to be_in_journey
+  it "knows if a journey is not complete" do
+    expect(subject).not_to be_complete
   end
 
-  # testing stations
-  it 'stores the entry station' do
-    card_min_bal.touch_in(entry_station)
-    expect(card_min_bal.entry_station).to eq entry_station
+  it 'has a penalty fare by default' do
+    expect(subject.fare).to eq Journey::PENALTY_FARE
   end
 
-  describe 'touch_in touch_out' do
-    before(:each) do
-      card_min_bal.touch_in(entry_station)
-      card_min_bal.touch_out(exit_station)
-    end
-    it 'will change in_journey to false when user touches out' do
-      expect(card_min_bal).not_to be_in_journey
-    end
-    it 'returns station value to nil' do
-      expect(card_min_bal.entry_station).to eq nil
-    end
-    it 'records previous journeys' do
-      expect(card_min_bal.journeys).to include journey
-    end
+  it "returns itself when exiting a journey" do
+    expect(subject.finish(station)).to eq(subject)
   end
 
-  it { expect(subject.journeys).to eq [] }
+  context 'given an entry station' do
+    subject {described_class.new(:station)}
+    it 'has an entry station' do
+     expect(subject.entry_station).to eq station
+   end
+   it "returns a penalty fare if no exit station given" do
+      expect(subject.fare).to eq Journey::PENALTY_FARE
+   end
+ end
+   context 'given an exit station' do
+     let(:other_station) { double :other_station }
+
+        before do
+          subject.finish(other_station)
+        end
+   end
 end
