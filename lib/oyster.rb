@@ -9,6 +9,7 @@ class OysterCard
 		@balance = balance
 		@entry_station
 		@journeys = []
+		@current_trip
 	end
 
 	def top_up(num)
@@ -17,9 +18,13 @@ class OysterCard
 	end
 
 
-	def touch_in(entry_station)
+	def touch_in(station)
 		fail "You cannot travel as you have less than £#{MINIMUM_AMOUNT}" if @balance < MINIMUM_AMOUNT
-		current_trip = Journey.new(entry_station: entry_station)
+		if @current_trip != nil
+			deduct
+		end
+		@current_trip = Journey.new
+		@current_trip.start(station)
 	end
 
 	def in_journey?
@@ -27,10 +32,14 @@ class OysterCard
 	end
 
 	def touch_out(exit_station)
-		current_trip.exit_station = exit_station
-		deduct
-		@journeys << {entry_station: @entry_station, exit_station: exit_station}
-		@entry_station = nil
+  # @journeys << {entry_station: @entry_station, exit_station: exit_station}
+    if @current_trip == nil
+			@current_trip = Journey.new
+		else
+		  @current_trip.finish(exit_station)
+		end
+    deduct
+		# @entry_station = nil
 	end
 
 
@@ -38,6 +47,7 @@ class OysterCard
 	private
 
 	def deduct
-		@balance -= MINIMUM_AMOUNT
+		@balance -= @current_trip.fare
+		@current_trip = nil
 	end
 end
