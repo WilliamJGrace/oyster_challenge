@@ -1,8 +1,8 @@
-
+require_relative 'oyster'
 class Journey
 
   PENALTY_FARE = 6
-  MIN_FARE = 1
+  MINIMUM_AMOUNT = 1
 
   attr_accessor :entry_station, :exit_station, :complete
 
@@ -22,7 +22,7 @@ class Journey
 
   def fare
     if complete?
-      MIN_FARE
+      MINIMUM_AMOUNT
     else
       PENALTY_FARE
     end

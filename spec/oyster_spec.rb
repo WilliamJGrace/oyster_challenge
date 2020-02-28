@@ -32,7 +32,7 @@ describe OysterCard do
 
     it 'start the journey' do
       card_min_bal.touch_in(entry_station)
-      expect(card_min_bal).to be_in_journey
+      expect(card_min_bal.current_trip).not_to eq nil
     end
 
     it "if mimimum amount is less than £1 you cannot travel" do
@@ -55,30 +55,48 @@ describe OysterCard do
 
 
     it 'will deduct the amount from the oyster card' do
-      expect{ card.touch_out(entry_station) }.to change{card.balance }.by -OysterCard::MINIMUM_AMOUNT
-    end
-  end
-  # testing stations
-  it 'stores the entry station' do
-    card_min_bal.touch_in(entry_station)
-    expect(card_min_bal.entry_station).to eq entry_station
-  end
-
-  describe 'touch_in touch_out' do
-    before(:each) do
       card_min_bal.touch_in(entry_station)
-      card_min_bal.touch_out(exit_station)
-    end
-    it 'will change in_journey to false when user touches out' do
-      expect(card_min_bal).not_to be_in_journey
-    end
-    it 'returns station value to nil' do
-      expect(card_min_bal.entry_station).to eq nil
-    end
-    it 'records previous journeys' do
-      expect(card_min_bal.journeys).to include journey
+      expect{ card_min_bal.touch_out(exit_station) }.to change{card_min_bal.balance }.by -OysterCard::MINIMUM_AMOUNT
     end
   end
 
-  it { expect(subject.journeys).to eq [] }
+
+  #testings fares
+  it 'will deduct penalty fare if user touches in twice' do
+    card_min_bal.touch_in(entry_station)
+    expect {card_min_bal.touch_in(entry_station)}.to change{card_min_bal.balance}.by -Journey::PENALTY_FARE
+  end
+
+  it 'will deduct penalty fare if user touches out without touching in' do
+    expect {card_min_bal.touch_out(exit_station)}.to change{card_min_bal.balance}.by -Journey::PENALTY_FARE
+  end
+
+
+
+
+  # testing stations
+
+  #Test now redundant
+  # it 'stores the entry station' do
+  #   card_min_bal.touch_in(entry_station)
+  #   expect(card_min_bal.entry_station).to eq entry_station
+  # end
+# THESE TESTS WILL BECOME REDUNDANT WHEN I ADD JORUNEY LOG
+#   describe 'touch_in touch_out' do
+#     before(:each) do
+#       card_min_bal.touch_in(entry_station)
+#       card_min_bal.touch_out(exit_station)
+#     end
+#     it 'will change in_journey to false when user touches out' do
+#       expect(card_min_bal).not_to be_in_journey
+#     end
+#     it 'returns station value to nil' do
+#       expect(card_min_bal.entry_station).to eq nil
+#     end
+#     it 'records previous journeys' do
+#       expect(card_min_bal.journeys).to include journey
+#     end
+#   end
+#
+#   it { expect(subject.journeys).to eq [] }
 end
